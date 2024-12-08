@@ -60,12 +60,13 @@ body {
 
 /* Animación de desvanecimiento para el slogan */
 .fade-in-slogan {
-    animation: fadeInSlogan ease 3s;
+    -ms-animation: fadeInSlogan ease 3s;  /* Primero las versiones con prefijos */
     -webkit-animation: fadeInSlogan ease 3s;
     -moz-animation: fadeInSlogan ease 3s;
     -o-animation: fadeInSlogan ease 3s;
-    -ms-animation: fadeInSlogan ease 3s;
+    animation: fadeInSlogan ease 3s;  /* Última la versión estándar */
 }
+
 
 @keyframes fadeInSlogan {
     0% {
@@ -80,12 +81,13 @@ body {
 
 /* Animación de desvanecimiento para el texto */
 .fade-in-text {
-    animation: fadeInSlogan ease 3s;
+    -ms-animation: fadeInSlogan ease 3s;  /* Primero las versiones con prefijos */
     -webkit-animation: fadeInSlogan ease 3s;
     -moz-animation: fadeInSlogan ease 3s;
     -o-animation: fadeInSlogan ease 3s;
-    -ms-animation: fadeInSlogan ease 3s;
+    animation: fadeInSlogan ease 3s;  /* Última la versión estándar */
 }
+
 
 @keyframes fadeInText {
     0% {
