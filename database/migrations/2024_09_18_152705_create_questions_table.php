@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string('correct_answer');
             $table->timestamps();
         });
-
     }
 
     public function down(): void
