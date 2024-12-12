@@ -16,7 +16,7 @@ return new class extends Migration {
                 ->constrained();
             $table->string('question');
             $table->string('type');
-            $table->longText('options')->nullable(); // Cambiamos a longText
+            $table->json('options')->nullable()->change();
             $table->string('correct_answer');
             $table->timestamps();
         });
