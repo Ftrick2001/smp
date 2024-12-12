@@ -21,8 +21,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Modificamos la columna a JSON después de crear la tabla
-        DB::statement('ALTER TABLE questions MODIFY options JSON NULL');
     }
 
     public function down(): void
