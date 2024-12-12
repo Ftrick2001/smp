@@ -23,8 +23,6 @@ class PeriodResource extends ModelResource
 
     protected string $title = 'Periodos';
 
-    protected bool $createInModal = true;
-    protected bool $editInModal = true;
     /**
      * @return list<MoonShineComponent|Field>
      */

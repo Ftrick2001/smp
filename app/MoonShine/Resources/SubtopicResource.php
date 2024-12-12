@@ -26,8 +26,6 @@ class SubtopicResource extends ModelResource
 
     protected string $title = 'Temas';
 
-    protected bool $createInModal = true;
-    protected bool $editInModal = true;
 
     /**
      * @return list<MoonShineComponent|Field>
@@ -50,12 +48,6 @@ class SubtopicResource extends ModelResource
         ];
     }
 
-    /**
-     * @param Subtopic $item
-     *
-     * @return array<string, string[]|string>
-     * @see https://laravel.com/docs/validation#available-validation-rules
-     */
     public function rules(Model $item): array
     {
         return [];
