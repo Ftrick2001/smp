@@ -177,7 +177,7 @@
                     </div>
                 `;
 
-                const APP_URL = process.env.BASE_URL;
+                const APP_URL = "https://whale-app-hs35l.ondigitalocean.app";
                 fetch(`${APP_URL}/guardar-resultados`, {
                     method: 'POST',
                     headers: {
