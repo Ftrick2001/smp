@@ -177,7 +177,8 @@
                     </div>
                 `;
 
-                fetch('http://127.0.0.1:8000/guardar-resultados', {
+                const APP_URL = process.env.BASE_URL;
+                fetch(`${APP_URL}/guardar-resultados`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

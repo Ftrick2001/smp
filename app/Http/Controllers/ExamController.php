@@ -4,14 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Exam;
-
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\Exam;
 use App\Models\Result;
-
+use Illuminate\Support\Facades\Log;
 
 class ExamController extends Controller
 {
@@ -23,35 +17,55 @@ class ExamController extends Controller
 
     public function show($exam_id)
     {
-        // Traer el examen con las preguntas asociadas usando 'with'
-        $exam = Exam::with('questions')->findOrFail($exam_id);
+        try {
+            $exam = Exam::with('questions')->findOrFail($exam_id);
 
-        // Si la petición es AJAX, devolver los datos como JSON
-        if (request()->ajax()) {
-            return response()->json($exam);
+            if (request()->ajax()) {
+                return response()->json($exam);
+            }
+
+            return view('page.examen', compact('exam'));
+        } catch (\Exception $e) {
+            Log::error('Error loading exam: ' . $e->getMessage());
+
+            if (request()->ajax()) {
+                return response()->json(['error' => 'Error loading exam'], 500);
+            }
+
+            return back()->with('error', 'Unable to load exam');
         }
-
-        // Si no es una solicitud AJAX, retornar la vista con el examen
-        return view('page.examen', compact('exam'));
     }
 
     public function storeResult(Request $request)
     {
-        $request->validate([
-            'exam_id' => 'required|exists:exams,id',
-            'student' => 'required|string|max:255',
-            'score' => 'required|numeric|min:0'
-        ]);
+        try {
+            $validated = $request->validate([
+                'exam_id' => 'required|exists:exams,id',
+                'student' => 'required|string|max:255',
+                'score' => 'required|numeric|min:0'
+            ]);
 
-        $result = new Result();
-        $result->exam_id = $request->exam_id;
-        $result->student = $request->student;
-        $result->score = $request->score;
-        $result->save();
+            $result = Result::create($validated);
 
-        return response()->json(['message' => 'Resultado guardado exitosamente']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Resultado guardado exitosamente',
+                'data' => $result
+            ], 200);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de validación',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            Log::error('Error storing exam result: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al guardar el resultado'
+            ], 500);
+        }
     }
-
-
-
 }
